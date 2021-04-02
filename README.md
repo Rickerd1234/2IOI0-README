@@ -1,7 +1,6 @@
 # 2IOI0 DBL Process Mining Prediction Tool (Group 8)
 
-This README is best viewed at the following url:
-https://github.com/Rickerd1234/2IOI0-README
+This README is best viewed online (at https://github.com/Rickerd1234/2IOI0-README)
 
 ## Contents
 <ul>
@@ -303,7 +302,10 @@ This is a more experimental predictor, we do not have this implemented in our ma
   <li>py LSTM_activity_model.py</li>
 </ul>
 
-LUUK's explanation of LSTM
+Firstly, the data is preprocessed to a 3D-array with shape (amount_of_cases, case_length, amount_of_features). Then a generator is used to yield a X and y, with X being the sequence of all events of that case upto the current event (so not including the future events) and the y is the actual next event. This generator will be the imput of the Keras recurent neural network with LSTM layers. It then fits the training data to the model en tunes the weights on the validation data. But fitting the whole dataset on the model takes very long, so for a short training the generator is limited by the steps_per_epoch and validation_steps. For example, when steps_per_epoch = 700, it will only use 700 events per epoch instead of the whole dataset. 
+When the model is fitted, the best model can be stored locally. It could then be loaded back at any time without the need to train it again. It is also possible to train the loaded moddel even further with more training data. Lastly, the model can also be tested, with the Keras function: evaluate_generator() using the test set.
+
+For more details on LSTM you can read <a href=https://colah.github.io/posts/2015-08-Understanding-LSTMs/>this article</a>, which explains the LSTM deep learning algorithm in detail.
 
 ## Preprocessing
 Before we run our predictors over the training and test data, we need to do some processing. This is required for the predictors, error measures, but also to remove possible biases of the dataset. This preprocessing consists of multiple parts, the most important ones are discussed in the following sections.
